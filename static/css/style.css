@@ -1,0 +1,31 @@
+/* unvisited link */
+a:link {
+    color: black;
+}
+
+/* visited link */
+a:visited {
+    color: black;
+}
+
+/* mouse over link */
+a:hover {
+    color: whitesmoke;
+}
+
+/* selected link */
+a:active {
+    color: yellow;
+}
+
+body {
+    background-color: #E0E0E0;
+}
+
+.table {
+    background-color: #8EA5AD;
+}
+
+th {
+    background-color: #838B8E;
+}

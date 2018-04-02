@@ -1,0 +1,36 @@
+{% extends 'layout.html' %} 
+
+{% block body %} 
+
+    <h4>Images</h4>
+    <div class="table-responsive">
+    <table class="table">
+        <caption>Images</caption>
+        <thread>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Vulnarabilities</th>
+                <th scope="col"></th>
+            </tr>
+        </thread>
+        <tbody>
+    {% for image in images %} 
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ image.name }}</td>
+            <td>{{ image.status }}</td>
+            {% if image.color == "#DE3E4B" %}
+            <td bgcolor="{{ image.color }}"> <a href="/imagescan/{{ image.id }}" target="_new">Vulnarabilities found</a></td>
+            {% else %}
+            <td bgcolor="{{ image.color }}">None</td>
+            {% endif %}
+            <td><a href="/delimage/{{ image.id }}">delete</a></td>
+        </tr>
+    {% endfor %} 
+    </tbody>
+    </table>
+</div>
+
+{% endblock %}
