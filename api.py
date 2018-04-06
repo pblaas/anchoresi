@@ -7,7 +7,7 @@ import re
 
 __author__ = "Patrick Blaas <patrick@kite4fun.nl>"
 __license__ = "GPL v3"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __status__ = "Active"
 
 app = Flask(__name__, static_url_path='/static')
