@@ -3,6 +3,7 @@ import subprocess
 import json
 import csv
 import config
+import re
 
 __author__ = "Patrick Blaas <patrick@kite4fun.nl>"
 __license__ = "GPL v3"
@@ -82,7 +83,61 @@ def sysstatus():
     returnStatus = []
     for i in syslist:
             returnStatus.append(i)
-    return render_template('sysstatus.html', status=returnStatus)
+
+    global matrix
+    w, h = 2, 6
+    matrix = [[0 for x in range(w)] for y in range(h)]
+
+    # matrix[0] = analyzer
+    # matrix[1] = webhook
+    # matrix[2] = catalog
+    # matrix[3] = apiext
+    # matrix[4] = simplequeue
+    # matrix[5] = policyengine
+
+    r = re.compile(".*analyzer.*up")
+    match = filter(r.match, returnStatus)
+    matrix[0][0] = len(match)
+    r = re.compile(".*analyzer.*down")
+    match = filter(r.match, returnStatus)
+    matrix[0][1] = len(match)
+
+    r = re.compile(".*webhook.*up")
+    match = filter(r.match, returnStatus)
+    matrix[1][0] = len(match)
+    r = re.compile(".*webhook.*down")
+    match = filter(r.match, returnStatus)
+    matrix[1][1] = len(match)
+
+    r = re.compile(".*catalog.*up")
+    match = filter(r.match, returnStatus)
+    matrix[2][0] = len(match)
+    r = re.compile(".*catalog.*down")
+    match = filter(r.match, returnStatus)
+    matrix[2][1] = len(match)
+
+    r = re.compile(".*apiext.*up")
+    match = filter(r.match, returnStatus)
+    matrix[3][0] = len(match)
+    r = re.compile(".*apiext.*down")
+    match = filter(r.match, returnStatus)
+    matrix[3][1] = len(match)
+
+    r = re.compile(".*simplequeue.*up")
+    match = filter(r.match, returnStatus)
+    matrix[4][0] = len(match)
+    r = re.compile(".*simplequeue.*down")
+    match = filter(r.match, returnStatus)
+    matrix[4][1] = len(match)
+
+    r = re.compile(".*policy_engine.*up")
+    match = filter(r.match, returnStatus)
+    matrix[5][0] = len(match)
+    r = re.compile(".*policy_engine.*down")
+    match = filter(r.match, returnStatus)
+    matrix[5][1] = len(match)
+
+    return render_template('sysstatus.html', status=returnStatus, matrix=matrix)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
