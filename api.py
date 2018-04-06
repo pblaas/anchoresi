@@ -76,5 +76,13 @@ def delimage(id):
     return render_template('delimage.html', results=result)
 
 
+@app.route('/sysstatus')
+def sysstatus():
+    syslist = anchoreCLIGet("system", "status", "", "")
+    returnStatus = []
+    for i in syslist:
+            returnStatus.append(i)
+    return render_template('sysstatus.html', status=returnStatus)
+
 if __name__ == '__main__':
-    app.run(debug=False, port=5000)
+    app.run(debug=True, port=5000)
