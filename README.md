@@ -2,6 +2,6 @@
 
 ##### 
 
-This is prototype work to utilize the anchore-cli and the Flask microframework to present a lightweight Web UI which enables
-insight in Vularabilities from container images which are added to the anchore Platform.
+This is a rewrite of the Anchore simpel UI based on API instead of previous cli tooling.
 
+Current support are basic functions like image overview, vulnerability overview, adding and deleting images from the platform.

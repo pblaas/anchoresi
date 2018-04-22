@@ -1,36 +1,38 @@
 {% extends 'layout.html' %} 
 
 {% block body %} 
-
-    <h4>Images</h4>
-    <div class="table-responsive">
-    <table class="table">
-        <caption>Images</caption>
-        <thread>
+        <h4>Images</h4>
+        <table class="table">
+                <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Status</th>
-                <th scope="col">Vulnarabilities</th>
-                <th scope="col"></th>
+                <th>#</th>
+                <th>Analysis Status</th>
+                <th>Registry</th>
+                <th>Repo</th>
+                <th>tag</th>
+                <th>Distro</th>
+                <th>Distro version</th>
+                <th>ImageID</th>
+                <th>Scan status</th>
             </tr>
-        </thread>
-        <tbody>
-    {% for image in images %} 
-        <tr>
+            </thead>
+          {% for i in dataimage %}
+            <tr bgcolor="{{ dataimage[loop.index-1]["color"] }}">
             <td>{{ loop.index }}</td>
-            <td>{{ image.name }}</td>
-            <td>{{ image.status }}</td>
-            {% if image.color == "#DE3E4B" %}
-            <td bgcolor="{{ image.color }}"> <a href="/imagescan/{{ image.id }}" target="_new">Vulnarabilities found</a></td>
+            <td>{{ dataimage[loop.index-1]["analysis_status"] }}</td>
+            <td>{{ dataimage[loop.index-1]["image_detail"][0]["registry"] }} </td>
+            <td>{{ dataimage[loop.index-1]["image_detail"][0]["repo"] }} </td>
+            <td>{{ dataimage[loop.index-1]["image_detail"][0]["tag"] }} </td>
+            <td>{{ dataimage[loop.index-1]["image_content"]["metadata"]["distro"] }}</td>
+            <td>{{ dataimage[loop.index-1]["image_content"]["metadata"]["distro_version"] }}</td>
+            <td><a href="/delimage/{{ dataimage[loop.index-1]["image_detail"][0]["imageId"] }}" target="_self">Delete</a> </td>
+            {% if "#DE3E4B" in dataimage[loop.index-1]["color"] %}
+            <td><a href="/vulnarabilities/{{ dataimage[loop.index-1]["image_detail"][0]["imageId"] }}" target="_self">Vulnerabilities found</a> </td>
             {% else %}
-            <td bgcolor="{{ image.color }}">None</td>
+            <td>No vulnerabilities found</a> </td>
             {% endif %}
-            <td><a href="/delimage/{{ image.id }}">delete</a></td>
-        </tr>
-    {% endfor %} 
-    </tbody>
-    </table>
-</div>
-
+            </tr>            
+          {% endfor %}
+        </table>
+                 
 {% endblock %}

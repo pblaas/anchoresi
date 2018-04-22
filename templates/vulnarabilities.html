@@ -2,8 +2,8 @@
 
 {% block body %} 
 
-<h4>Vulnarabilities</h4>
-{% if results|length > 0 %}
+<h4>Vulnerabilities</h4>
+{% if data['vulnerabilities']|length > 0 %}
 
 <div class="table-responsive">
         <table class="table">
@@ -11,7 +11,6 @@
             <thread>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Id</th>
                     <th scope="col">Package</th>
                     <th scope="col">Severity</th>
                     <th scope="col">Fix</th>
@@ -19,14 +18,13 @@
                 </tr>
             </thread>
             <tbody>
-        {% for i in results %} 
+        {% for i in data['vulnerabilities'] %} 
             <tr>
                 <td>{{ loop.index }}</td>
-                <td>{{ i.Id }}</td>
-                <td>{{ i.Package }}</td>
-                <td>{{ i.Severity }}</td>
-                <td>{{ i.Fix }}</td>
-                <td><a href="{{ i.Url }}" target="_new">{{ i.Url }}</a></td>
+                <td>{{ i.package }}</td>
+                <td>{{ i.severity }}</td>
+                <td>{{ i.fix }}</td>
+                <td><a href="{{ i.url }}" target="_new">{{ i.url }}</a></td>
             </tr>
         {% endfor %} 
         </tbody>
@@ -34,7 +32,7 @@
 
 {% else %}
 
-No Vulnarabilities found!
+No Vulnerabilities found!
 
 {% endif %}
 

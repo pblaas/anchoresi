@@ -1,24 +1,32 @@
-<!DOCTYPE <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Simpel Rest API</title>
+    <title>Anchore UI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-    <link href="/static/css/c3.min.css" rel="stylesheet">
+  
 
 </head>
 
 <body>
-        <script src="/static/d3.min.js" charset="utf-8"></script>
-        <script src="/static/c3.min.js"></script>
+        
     {% include 'includes/_navbar.html' %}
     <div class="container">
-        {% block body %}{% endblock %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert">
+                    {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+    {% block body %}{% endblock %}
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>

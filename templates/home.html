@@ -3,8 +3,35 @@
 {% block body %} 
 
     <div class="jumbotron">
-            <h1>Anchore CLI Simpel Rest API</h1>
-            <p class="lead">This app will provide a simple overview of the images which are scanned by the Anchore platform.</p>
+            <p class="lead">Simple ANCHORE restfull interface.</p><p>This enables simplified overview and basic managagment over your Anchore platform.</p>
           </div>
+          <h4>System status</h4>
+          <table class="table">
+                <thead>
+            <tr>
+                <th>Servicename</th>
+                <th>URL</th>
+                <th>Online Status</th>
+                <th>Busy status</th>
+            </tr>
+            </thead>
+          {% for i in dataservice %}
+            <tr>
+            <td>{{ dataservice[loop.index-1]["servicename"] }}</td>
+            <td>{{ dataservice[loop.index-1]["base_url"] }} </td>
+            {% if 'true' in (dataservice[loop.index-1]["service_detail"]["up"]|lower)  %}
+            <td class="table-success">{{ dataservice[loop.index-1]["service_detail"]["up"] }} </td>
+            {% else %}
+            <td class="table-danger">{{ dataservice[loop.index-1]["service_detail"]["up"] }} </td>
+            {% endif %}
+            <td>{{ dataservice[loop.index-1]["service_detail"]["busy"] }} </td>
+            </tr>            
+          {% endfor %}
+        </table>
+
+        <form  action="/addimage" method="POST">
+        <input type="text" id="tag" name="tag" size="40" placeholder="docker.io/pblaas/openstack-cli:latest">
+        <input type="Submit" value="submit">
+        </form>
 
 {% endblock %}
