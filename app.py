@@ -1,22 +1,32 @@
 from flask import Flask, jsonify, request, render_template, url_for, flash, redirect
 import urllib2
 import json
-import config
+# import config
 from urllib2 import Request, urlopen, URLError, HTTPError
 import sys
 import errno
+import os
+
+
+if "USERNAME" not in os.environ:
+    os.environ["USERNAME"] = "admin"
+if "PASSWORD" not in os.environ:
+    os.environ["PASSWORD"] = "password"
+if "URL" not in os.environ:
+    os.environ["URL"] = "https://anchore.YOURIPHERE.nip.io"
+
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
 
 auth_handler = urllib2.HTTPBasicAuthHandler()
-auth_handler.add_password(realm='Authentication required', uri=config.url, user=config.user, passwd=config.password)
+auth_handler.add_password(realm='Authentication required', uri=os.environ["URL"], user=os.environ["USERNAME"], passwd=os.environ["PASSWORD"])
 opener = urllib2.build_opener(auth_handler)
 urllib2.install_opener(opener)
 
 
 def vulnCheck(id):
-    vuln_result = urllib2.urlopen(config.url + '/images/by_id/' + id + '/vuln/os').read()
+    vuln_result = urllib2.urlopen(os.environ["URL"] + '/images/by_id/' + id + '/vuln/os').read()
     python_data_vuln = json.loads(vuln_result)
     if len(python_data_vuln['vulnerabilities']) > 1:
         return "#DE3E4B"
@@ -26,14 +36,14 @@ def vulnCheck(id):
 
 @app.route('/vulnarabilities/<string:id>')
 def vulnarabilities(id):
-    vuln_result = urllib2.urlopen(config.url + '/images/by_id/' + id + '/vuln/os').read()
+    vuln_result = urllib2.urlopen(os.environ["URL"] + '/images/by_id/' + id + '/vuln/os').read()
     python_data_vuln = json.loads(vuln_result)
     return render_template('vulnarabilities.html', data=python_data_vuln)
 
 
 @app.route('/delimage/<string:id>')
 def delimage(id):
-    uri = config.url + '/images/by_id/' + id + '?force=true'
+    uri = os.environ["URL"] + '/images/by_id/' + id + '?force=true'
     request = urllib2.Request(uri)
     request.get_method = lambda: 'DELETE'
     response = urllib2.urlopen(request).read()
@@ -49,7 +59,7 @@ def addimage():
     data['tag'] = request.form['tag']
     json_data = json.dumps(data)
     clen = len(json_data)
-    req = urllib2.Request(config.url + '/images', json_data, {'Content-Type': 'application/json', 'Content-Length': clen})
+    req = urllib2.Request(os.environ["URL"] + '/images', json_data, {'Content-Type': 'application/json', 'Content-Length': clen})
     try:
         response = urllib2.urlopen(req).read()
     except HTTPError as e:
@@ -75,7 +85,7 @@ def addimage():
 @app.route('/')
 def home():
     try:
-        service_result = urllib2.urlopen(config.url + '/v1/system/services').read()
+        service_result = urllib2.urlopen(os.environ["URL"] + '/v1/system/services').read()
         python_data_service = json.loads(service_result)
         return render_template('home.html', dataservice=python_data_service)
     except IOError as e:
@@ -86,7 +96,7 @@ def home():
 @app.route('/images')
 def images():
     try:
-        image_result = urllib2.urlopen(config.url + '/v1/images').read()
+        image_result = urllib2.urlopen(os.environ["URL"] + '/v1/images').read()
         python_data_image = json.loads(image_result)
 
         global imageList
