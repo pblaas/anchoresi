@@ -1,0 +1,38 @@
+{% extends 'layout.html' %} 
+
+{% block body %} 
+        <h4>Images</h4>
+        <table class="table">
+                <thead>
+            <tr>
+                <th>#</th>
+                <th>Analysis Status</th>
+                <th>Registry</th>
+                <th>Repo</th>
+                <th>tag</th>
+                <th>Distro</th>
+                <th>Distro version</th>
+                <th>ImageID</th>
+                <th>Scan status</th>
+            </tr>
+            </thead>
+          {% for i in dataimage %}
+            <tr bgcolor="{{ dataimage[loop.index-1]["color"] }}">
+            <td>{{ loop.index }}</td>
+            <td>{{ dataimage[loop.index-1]["analysis_status"] }}</td>
+            <td>{{ dataimage[loop.index-1]["image_detail"][0]["registry"] }} </td>
+            <td>{{ dataimage[loop.index-1]["image_detail"][0]["repo"] }} </td>
+            <td>{{ dataimage[loop.index-1]["image_detail"][0]["tag"] }} </td>
+            <td>{{ dataimage[loop.index-1]["image_content"]["metadata"]["distro"] }}</td>
+            <td>{{ dataimage[loop.index-1]["image_content"]["metadata"]["distro_version"] }}</td>
+            <td><a href="/delimage/{{ dataimage[loop.index-1]["image_detail"][0]["imageId"] }}" target="_self">Delete</a> </td>
+            {% if "#DE3E4B" in dataimage[loop.index-1]["color"] %}
+            <td><a href="/vulnarabilities/{{ dataimage[loop.index-1]["image_detail"][0]["imageId"] }}" target="_self">Vulnerabilities found</a> </td>
+            {% else %}
+            <td>No vulnerabilities found</a> </td>
+            {% endif %}
+            </tr>            
+          {% endfor %}
+        </table>
+                 
+{% endblock %}
