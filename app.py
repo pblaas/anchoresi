@@ -39,7 +39,7 @@ def delimage(id):
     response = urllib2.urlopen(request).read()
     # return render_template('delimage.html', response=response)
     flash(u'Image successfully deleted.', 'success')
-    return redirect(url_for('home'))
+    return redirect(url_for('images'))
 
 
 @app.route('/addimage', methods=['GET', 'POST'])
