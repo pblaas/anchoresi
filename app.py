@@ -3,12 +3,14 @@ import urllib2
 import json
 import config
 from urllib2 import Request, urlopen, URLError, HTTPError
+import sys
+import errno
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
 
 auth_handler = urllib2.HTTPBasicAuthHandler()
-auth_handler.add_password(realm='Authentication required', uri=config.url, user=config.user, passwd=config.password )
+auth_handler.add_password(realm='Authentication required', uri=config.url, user=config.user, passwd=config.password)
 opener = urllib2.build_opener(auth_handler)
 urllib2.install_opener(opener)
 
@@ -21,11 +23,13 @@ def vulnCheck(id):
     else:
         return ""
 
+
 @app.route('/vulnarabilities/<string:id>')
 def vulnarabilities(id):
     vuln_result = urllib2.urlopen(config.url + '/images/by_id/' + id + '/vuln/os').read()
     python_data_vuln = json.loads(vuln_result)
     return render_template('vulnarabilities.html', data=python_data_vuln)
+
 
 @app.route('/delimage/<string:id>')
 def delimage(id):
@@ -33,13 +37,14 @@ def delimage(id):
     request = urllib2.Request(uri)
     request.get_method = lambda: 'DELETE'
     response = urllib2.urlopen(request).read()
-    #return render_template('delimage.html', response=response)
-    flash(u'Image successfully deleted.', 'danger')
+    # return render_template('delimage.html', response=response)
+    flash(u'Image successfully deleted.', 'success')
     return redirect(url_for('home'))
+
 
 @app.route('/addimage', methods=['GET', 'POST'])
 def addimage():
-    #if request.method == 'POST':
+    # if request.method == 'POST':
     data = {}
     data['tag'] = request.form['tag']
     json_data = json.dumps(data)
@@ -60,36 +65,44 @@ def addimage():
     else:
         flash(u'Image successfully added.', 'success')
     # everything is fine
-    ###f = urllib2.urlopen(req)
-    #return render_template('addimage.html', response=f)
-    ###flash(u'Image successfully added.', 'success')
+    # ##f = urllib2.urlopen(req)
+    # return render_template('addimage.html', response=f)
+    # ##flash(u'Image successfully added.', 'success')
     return redirect(url_for('home'))
-    #return render_template('debug.html', data=response)
+    # return render_template('debug.html', data=response)
+
 
 @app.route('/')
 def home():
-    service_result = urllib2.urlopen(config.url + '/v1/system/services').read()
-    python_data_service = json.loads(service_result)
-    return render_template('home.html', dataservice=python_data_service)
+    try:
+        service_result = urllib2.urlopen(config.url + '/v1/system/services').read()
+        python_data_service = json.loads(service_result)
+        return render_template('home.html', dataservice=python_data_service)
+    except IOError as e:
+        if e.errno == errno.EPIPE:
+            return render_template('error.html')
+
 
 @app.route('/images')
 def images():
-    image_result = urllib2.urlopen(config.url + '/v1/images').read()
-    python_data_image = json.loads(image_result)
+    try:
+        image_result = urllib2.urlopen(config.url + '/v1/images').read()
+        python_data_image = json.loads(image_result)
 
-    global imageList
-    imageList=[]
-    for object in python_data_image:
-        id = object["image_detail"][0]["imageId"]
-        if "analyzed" in object["analysis_status"]:
-            object['color'] = vulnCheck(id)
-        else:
-            object['color'] = "orange"
-        imageList.append(object)
-    return render_template('images.html', dataimage=imageList)
-  
+        global imageList
+        imageList = []
+        for object in python_data_image:
+            id = object["image_detail"][0]["imageId"]
+            if "analyzed" in object["analysis_status"]:
+                object['color'] = vulnCheck(id)
+            else:
+                object['color'] = "orange"
+            imageList.append(object)
+        return render_template('images.html', dataimage=imageList)
+    except IOError as e:
+        if e.errno == errno.EPIPE:
+            return render_template('error.html')
+
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
-
-
+    app.run(debug=False, threaded=True, host='0.0.0.0', port=5000)

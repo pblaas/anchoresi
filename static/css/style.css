@@ -1,4 +1,22 @@
 /* unvisited link */
+
+* {
+    margin: 0;
+    padding: 0;
+
+}
+
+html {
+    background-color: #fff;
+    color: #555;
+}
+
+header {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/static/containerbg.jpg);
+    background-size:    cover;
+    background-position: center;
+    height: 100vh;
+}
 a:link {
     color: black;
 }
@@ -10,22 +28,41 @@ a:visited {
 
 /* mouse over link */
 a:hover {
-    color: whitesmoke;
+    color:red;
 }
 
 /* selected link */
 a:active {
-    color: yellow;
+    color: orange;
 }
 
-body {
-    background-color: #E0E0E0;
+.nav-link:visited,
+.nav-link:link {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s;
 }
+
+.nav-link:hover,
+.nav-link:active {
+    border-bottom: 2px solid orange;
+}
+
 
 .table {
-    background-color: #8EA5AD;
+    background: rgba(255,255,255,0.8);
 }
 
-th {
-    background-color: #838B8E;
+.jumbotron {
+    background: rgba(255,165,0,0.9);
+    padding: 0;
+    margin: 0;
 }
+
+h4 {
+    color: orange;
+}
+

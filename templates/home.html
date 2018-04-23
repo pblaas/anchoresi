@@ -28,10 +28,10 @@
             </tr>            
           {% endfor %}
         </table>
-
+        <h4>Add new image</h4>
         <form  action="/addimage" method="POST">
         <input type="text" id="tag" name="tag" size="40" placeholder="docker.io/pblaas/openstack-cli:latest">
-        <input type="Submit" value="submit">
+        <input type="Submit" value="Add image">
         </form>
 
 {% endblock %}
