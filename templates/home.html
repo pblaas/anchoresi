@@ -28,8 +28,15 @@
           {% endfor %}
         </table>
         <h4>Add new image</h4>
-        <form  action="/addimage" method="POST">
-        <input type="text" id="tag" name="tag" size="40" placeholder="docker.io/pblaas/openstack-cli:latest">
-        <input type="Submit" value="Add image">
+
+
+          <form  action="/addimage" method="POST">
+          <div class="input-group mb-3">
+              <input type="text" class="form-control" id="tag" name="tag" placeholder="docker.io/pblaas/openstack-cli:latest" aria-label="Docker tag" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-success" type="submit">Add Image</button>
+              </div>
+          </div>
         </form>
+
 {% endblock %}
