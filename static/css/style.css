@@ -15,7 +15,9 @@ header {
     background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/static/containerbg.jpg);
     background-size:    cover;
     background-position: center;
-    height: 100vh;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 a:link {
     color: black;
