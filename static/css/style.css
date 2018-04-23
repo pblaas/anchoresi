@@ -61,16 +61,45 @@ a:active {
 
 .table {
     background: rgba(255,255,255,0.8);
+    border: 2px solid black;
 }
 
 .jumbotron {
     background: rgba(255,165,0,0.9);
     padding: 0;
     margin: 0;
+    text-align: center;
+    font-weight: 700;
+}
+
+.jumbotron .lead {
+    font-weight: 700;
+    text-align: center;
+}
+
+.jumbotron.about{
+    background: rgba(255,165,0,0.9);
+    padding: 2px 2px 2px 2px;
+    margin: 0;
+    text-align: left;
+    font-weight: 300;
 }
 
 h4 {
     color: orange;
     font-weight: 700;
+    text-shadow: 1px 1px #000;
 }
 
+tr.redbg,
+td.redbg {
+    background-color: rgba(255,0,0,0.5)
+}
+
+tr.orangebg {
+    background-color: rgba(255,165,0,0.5)
+}
+
+td.greenbg {
+    background-color: rgba(79, 248, 93, 0.5)
+}

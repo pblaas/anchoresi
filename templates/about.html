@@ -1,0 +1,23 @@
+{% extends 'layout.html' %} 
+
+{% block body %} 
+<div>
+    <h4>About</h4>
+    <div class="jumbotron about">
+    <p>
+        Anchoresi UI is build by Patrick Blaas and available on Github <a href="https://github.com/pblaas/anchoresi" target="_new">https://github.com/pblaas/anchoresi</a>
+        or <a href="https://hub.docker.com/r/pblaas/anchoresi/" target="_new">https://hub.docker.com/r/pblaas/anchoresi/</a> 
+        to provide a simple interface for basic CRUD handeling on the Anchore platform.<br /><br />
+        It supports Adding, Deleting and Inspecting images with possible more features to come.
+        It provides a alternative to the anchore-cli tool which is avaible from the Python 2.7 repo through pip, or the SAAS offering from Anchore.io although 
+        the functionality on Anchore.io is much more extensive then what Anchoresi is currently offering.
+
+        I hope it will be of use to you.
+    </p>
+    <p>
+        Running version: {{ version }}
+    </p>
+    </div>    
+</div>
+
+{% endblock %}

@@ -1,40 +1,43 @@
 {% extends 'layout.html' %} 
+{% block body %}
 
-{% block body %} 
-    <div class="jumbotron">
-            <p class="lead">Simple ANCHORE restfull interface.</p><p>This enables simplified overview and basic managagment over your Anchore platform.</p>
-          </div>
-          <h4>System status</h4>
-          <table class="table">
-                <thead>
-            <tr>
-                <th>Servicename</th>
-                <th>URL</th>
-                <th>Online Status</th>
-                <th>Busy status</th>
-            </tr>
-            </thead>
-          {% for i in dataservice %}
-            <tr>
-            <td>{{ dataservice[loop.index-1]["servicename"] }}</td>
-            <td>{{ dataservice[loop.index-1]["base_url"] }} </td>
-            {% if 'true' in (dataservice[loop.index-1]["service_detail"]["up"]|lower)  %}
-            <td class="table-success">Online</td>
-            {% else %}
-            <td class="table-danger">Offline</td>
-            {% endif %}
-            <td>{{ dataservice[loop.index-1]["service_detail"]["busy"] }} </td>
-            </tr>            
-          {% endfor %}
-        </table>
-        <h4>Add new image</h4>
-          <form  action="/addimage" method="POST">
-          <div class="input-group mb-3">
-              <input type="text" class="form-control" id="tag" name="tag" placeholder="docker.io/pblaas/openstack-cli:latest" aria-label="Docker tag" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-success" type="submit">Add Image</button>
-              </div>
-          </div>
-        </form>
+<div>
+<div class="jumbotron">
+  <p class="lead">Simple ANCHORE interface.</p>
+</div>
+<h4>System status</h4>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Servicename</th>
+      <th>URL</th>
+      <th>Online Status</th>
+      <th>Busy status</th>
+    </tr>
+  </thead>
+  {% for i in dataservice %}
+  <tr>
+    <td>{{ dataservice[loop.index-1]["servicename"] }}</td>
+    <td>{{ dataservice[loop.index-1]["base_url"] }} </td>
+    {% if 'true' in (dataservice[loop.index-1]["service_detail"]["up"]|lower) %}
+    <td class="greenbg">Online</td>
+    {% else %}
+    <td class="redbg">Offline</td>
+    {% endif %}
+    <td>{{ dataservice[loop.index-1]["service_detail"]["busy"] }} </td>
+  </tr>
+  {% endfor %}
+</table>
+<h4>Add new image</h4>
+<form action="/addimage" method="POST">
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" id="tag" name="tag" placeholder="docker.io/pblaas/openstack-cli:latest" aria-label="Docker tag"
+      aria-describedby="basic-addon2">
+    <div class="input-group-append">
+      <button class="btn btn-success" type="submit">Add Image</button>
+    </div>
+  </div>
+</form>
+</div>
 
 {% endblock %}

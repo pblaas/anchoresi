@@ -1,6 +1,7 @@
 {% extends 'layout.html' %} 
 
 {% block body %} 
+        <div>
         <h4>Images</h4>
         <div class="table-responsive">
         <table class="table">
@@ -18,7 +19,7 @@
             </tr>
             </thead>
           {% for i in dataimage %}
-            <tr bgcolor="{{ dataimage[loop.index-1]["color"] }}">
+            <tr class="{{ dataimage[loop.index-1]["color"] }}">
             <td>{{ loop.index }}</td>
             <td>{{ dataimage[loop.index-1]["analysis_status"] }}</td>
             <td>{{ dataimage[loop.index-1]["image_detail"][0]["registry"] }} </td>
@@ -27,7 +28,7 @@
             <td>{{ dataimage[loop.index-1]["image_content"]["metadata"]["distro"] }}</td>
             <td>{{ dataimage[loop.index-1]["image_content"]["metadata"]["distro_version"] }}</td>
             <td><a href="/delimage/{{ dataimage[loop.index-1]["image_detail"][0]["imageId"] }}" target="_self">Delete</a> </td>
-            {% if "#DE3E4B" in dataimage[loop.index-1]["color"] %}
+            {% if "redbg" in dataimage[loop.index-1]["color"] %}
             <td><a href="/vulnarabilities/{{ dataimage[loop.index-1]["image_detail"][0]["imageId"] }}" target="_self">Vulnerabilities found</a> </td>
             {% else %}
             <td>No vulnerabilities found</a> </td>
@@ -36,4 +37,5 @@
           {% endfor %}
         </table>           
       </div>
+    </div>
 {% endblock %}

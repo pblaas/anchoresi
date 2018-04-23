@@ -1,7 +1,7 @@
 {% extends 'layout.html' %} 
 
 {% block body %} 
-
+<div>
 <h4>Vulnerabilities</h4>
 {% if data['vulnerabilities']|length > 0 %}
 
@@ -35,5 +35,5 @@
 No Vulnerabilities found!
 
 {% endif %}
-
+</div>
 {% endblock %}

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/animate.css">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
     <script>
         var hasScrollbar = function() {
@@ -48,9 +50,9 @@
     {% include 'includes/_navbar.html' %}
     <div class="container">
             {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
+            {% if messages %} 
               {% for category, message in messages %}
-                <div class="alert alert-{{ category }}" role="alert">
+                <div class="alert alert-{{ category }} animated bounce" role="alert">
                     {{ message }}
                 </div>
               {% endfor %}
