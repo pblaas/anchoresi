@@ -23,3 +23,16 @@ To hit the ground running use the Anchore SAAS offering. To host a cluster yours
 
 [anchore saas ref]: https://anchore.com/
 [anchore github ref]: https://github.com/anchore/anchore_deployment
+
+
+##### Using the Docker container.
+A docker container will be automaticly build after updating the application code. To use this container you need to provide environment flags
+
+```
+docker run -p 5000:5000 \
+-e URL=https://anchore.YOURIP.nip.io \
+-e USERNAME=admin \
+-e PASSWORD=YOURPASSWORDHERE \
+ pblaas/anchoresi:latest
+```
+
