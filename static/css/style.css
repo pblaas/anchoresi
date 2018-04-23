@@ -93,13 +93,17 @@ h4 {
 
 tr.redbg,
 td.redbg {
-    background-color: rgba(255,0,0,0.5)
+    background-color: rgba(255,0,0,0.5);
 }
 
 tr.orangebg {
-    background-color: rgba(255,165,0,0.5)
+    background-color: rgba(255,165,0,0.5);
+}
+
+tr.greybg {
+    background-color: rgb(138, 138, 138, 0.5);
 }
 
 td.greenbg {
-    background-color: rgba(79, 248, 93, 0.5)
+    background-color: rgba(79, 248, 93, 0.5);
 }
