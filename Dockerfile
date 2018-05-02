@@ -10,7 +10,7 @@ ENV URL https://127.0.0.1
 
 RUN pip install flask flask-paginate && mkdir /app
 
-ADD . /app
+COPY /app/ /app/
 WORKDIR /app
 
 EXPOSE 5000
