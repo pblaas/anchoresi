@@ -1,26 +1,29 @@
 {% extends 'layout.html' %} 
 
 {% block body %} 
-        <div>
+ 
         <h4>Images</h4>
-        <div class="table-responsive">
+        <div class="table-responsive-md table-responsive-lg">
+        {{ pagination.links }}
         <table class="table">
                 <thead>
             <tr class="greybg">
                 <th>#</th>
+                <th>Date added</th>
                 <th>Analysis Status</th>
                 <th>Registry</th>
                 <th>Repo</th>
-                <th>tag</th>
+                <th>Tag</th>
                 <th>Distro</th>
                 <th>Distro version</th>
-                <th>ImageID</th>
+                <th>Delete</th>
                 <th>Scan status</th>
             </tr>
             </thead>
           {% for i in dataimage %}
             <tr class="{{ dataimage[loop.index-1]["color"] }}">
-            <td>{{ loop.index }}</td>
+            <td>{{ loop.index + ((page -1) * 10) }}</td>
+            <td>{{ dataimage[loop.index-1]["image_detail"][0]["created_at"] }} </td>
             <td>{{ dataimage[loop.index-1]["analysis_status"] }}</td>
             <td>{{ dataimage[loop.index-1]["image_detail"][0]["registry"] }} </td>
             <td>{{ dataimage[loop.index-1]["image_detail"][0]["repo"] }} </td>
@@ -35,7 +38,9 @@
             {% endif %}
             </tr>            
           {% endfor %}
-        </table>           
-      </div>
+        </table>       
+      {{ pagination.links }}
     </div>
+
+
 {% endblock %}
