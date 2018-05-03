@@ -8,7 +8,7 @@ ENV PASSWORD password
 # https://your.anchore.api.host  # Do not add /v1
 ENV URL https://127.0.0.1
 
-RUN pip install flask flask-paginate && mkdir /app
+RUN pip install flask && mkdir /app
 
 COPY /app/ /app/
 WORKDIR /app
