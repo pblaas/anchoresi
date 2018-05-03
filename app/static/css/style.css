@@ -8,7 +8,6 @@
 }
 
 html {
-    background-color: #fff;
     color: #555;
     font-family: 'Lato', 'Arial', sans-serif;
     font-weight: 300;
@@ -61,7 +60,7 @@ a:active {
 
 .table {
     background: rgba(255,255,255,0.8);
-    border: 2px solid black;
+    border: 0px solid black;
     padding: 0;
     margin: 0;
 }
@@ -105,24 +104,47 @@ tr.orangebg {
 
 tr.greybg {
     background-color: rgb(138, 138, 138, 0.5);
+    border-collapse: unset;
 }
 
 td.greenbg {
     background-color: rgba(79, 248, 93, 0.5);
 }
 
-.pagination {
-    background: rgba(255,165,0,0.9);
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    font-weight: 700;
-}
-.pagination li {
-    margin: 0px 8px 0px 0px;
-}
 
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,102,203, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
    
+.pace {
+    -webkit-pointer-events: none;
+    pointer-events: none;
+  
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+  
+  .pace-inactive {
+    display: none;
+  }
+  
+  .pace .pace-progress {
+    background: #dda222;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    right: 100%;
+    width: 100%;
+    height: 2px;
+  }
+  
+  .dataTables_info,
+  .dataTables_length,
+  .dataTables_filter {
+      color: white;
+  }
+
+  .col-sm-12 {
+      padding: 0;
+  }

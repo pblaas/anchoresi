@@ -1,11 +1,15 @@
 {% extends 'layout.html' %} 
 
 {% block body %} 
- 
+<script>
+  $(document).ready(function() {
+  $('#images').DataTable();
+} );
+</script>
+
         <h4>Images</h4>
-        <div class="table-responsive-md table-responsive-lg">
-        {{ pagination.links }}
-        <table class="table">
+        <div class="table-responsive-md">
+        <table class="table" id="images">
                 <thead>
             <tr class="greybg">
                 <th>#</th>
@@ -20,9 +24,10 @@
                 <th>Scan status</th>
             </tr>
             </thead>
+            <tbody>
           {% for i in dataimage %}
             <tr class="{{ dataimage[loop.index-1]["color"] }}">
-            <td>{{ loop.index + ((page -1) * 10) }}</td>
+            <td>{{ loop.index }}</td>
             <td>{{ dataimage[loop.index-1]["image_detail"][0]["created_at"] }} </td>
             <td>{{ dataimage[loop.index-1]["analysis_status"] }}</td>
             <td>{{ dataimage[loop.index-1]["image_detail"][0]["registry"] }} </td>
@@ -38,9 +43,8 @@
             {% endif %}
             </tr>            
           {% endfor %}
+        </tbody>
         </table>       
-      {{ pagination.links }}
     </div>
-
 
 {% endblock %}

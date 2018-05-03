@@ -5,10 +5,12 @@ from urllib2 import Request, urlopen, URLError, HTTPError
 import sys
 import errno
 import os
-from flask_paginate import Pagination, get_page_parameter
+
+# import the flask extension
+from flask_caching import Cache
 
 __author__ = "Patrick Blaas <patrick@kite4fun.nl>"
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 __status__ = "Active"
 
 if "USERNAME" not in os.environ:
@@ -21,6 +23,7 @@ if "URL" not in os.environ:
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 auth_handler = urllib2.HTTPBasicAuthHandler()
 auth_handler.add_password(realm='Authentication required', uri=os.environ["URL"], user=os.environ["USERNAME"], passwd=os.environ["PASSWORD"])
@@ -91,18 +94,12 @@ def home():
 
 
 @app.route('/images')
+# @cache.cached(timeout=50)
 def images():
     try:
-        search = False
-        q = request.args.get('q')
-        if q:
-            search = True
-        page = request.args.get(get_page_parameter(), type=int, default=1)
-
         image_result = urllib2.urlopen(os.environ["URL"] + '/v1/images').read()
         python_data_image = json.loads(image_result)
 
-        global page
         global imageList
         imageList = []
         for object in python_data_image:
@@ -112,8 +109,7 @@ def images():
             else:
                 object['color'] = "orangebg"
             imageList.append(object)
-        pagination = Pagination(page=page, total=len(imageList), search=search, record_name='imageList', css_framework='foundation')
-        return render_template('images.html', dataimage=imageList[page * 10 - 10:page * 10], pagination=pagination, page=page)
+        return render_template('images.html', dataimage=imageList)
     except IOError as e:
         if e.errno == errno.EPIPE:
             return render_template('error.html')
@@ -127,6 +123,14 @@ def about():
         if e.errno == errno.EPIPE:
             return render_template('error.html')
 
+
+@app.route('/test')
+def test():
+    try:
+        return render_template('test.html', version=__version__)
+    except IOError as e:
+        if e.errno == errno.EPIPE:
+            return render_template('error.html')
 
 if __name__ == '__main__':
     app.run(debug=False, threaded=True, host='0.0.0.0', port=5000)
