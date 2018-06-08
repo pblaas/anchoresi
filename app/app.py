@@ -10,7 +10,7 @@ import os
 from flask_caching import Cache
 
 __author__ = "Patrick Blaas <patrick@kite4fun.nl>"
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 __status__ = "Active"
 
 if "USERNAME" not in os.environ:
