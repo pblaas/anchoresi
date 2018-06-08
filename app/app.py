@@ -82,6 +82,28 @@ def addimage():
     return redirect(url_for('home'))
 
 
+@app.route('/delanalyzer/<string:hostid>', methods=['GET', 'POST'])
+def delanalyzer(hostid):
+    uri = os.environ["URL"] + '/system/services/analyzer/' + hostid
+    request = urllib2.Request(uri)
+    request.get_method = lambda: 'DELETE'
+    try:
+        response = urllib2.urlopen(request).read()
+    except HTTPError as e:
+        print 'The server couldn\'t fulfill the request.'
+        print 'Error code: ', e.code
+        response = e.code
+        flash(u'An error occured. Analyzer not removed. Reason: ' + str(e.code), 'danger')
+    except URLError as e:
+        print 'We failed to reach a server.'
+        print 'Reason: ', e.reason
+        repsonse = e.reason
+        flash(u'An error occured. Analyzer not removed. Reason: ' + str(e.reason), 'danger')
+    else:
+        flash(u'Analyzer service removed.', 'success')
+    return redirect(url_for('home'))
+
+
 @app.route('/')
 def home():
     try:

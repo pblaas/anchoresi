@@ -21,7 +21,7 @@
     {% if 'true' in (dataservice[loop.index-1]["service_detail"]["up"]|lower) %}
     <td class="greenbg">Online</td>
     {% else %}
-    <td class="redbg">Offline</td>
+    <td class="redbg"><a href='/delanalyzer/{{ dataservice[loop.index-1]["hostid"] }}'>Offline</a></td>
     {% endif %}
     <td>{{ dataservice[loop.index-1]["service_detail"]["busy"] }} </td>
   </tr>
