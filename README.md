@@ -27,7 +27,7 @@ To hit the ground running use the Anchore SAAS offering. To host a cluster yours
 ##### Running the app.
 To run the app you need to set 3 environment variables.
 ```
-export URL=https://anchore.YOURIP.nip.nl
+export URL=https://anchore.YOURIP.nip.io
 export USERNAME=admin
 export PASSWORD=YOURPASSWORD HERE
 ```
