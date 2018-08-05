@@ -10,7 +10,7 @@ import os
 from flask_caching import Cache
 
 __author__ = "Patrick Blaas <patrick@kite4fun.nl>"
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 __status__ = "Active"
 
 if "USERNAME" not in os.environ:
@@ -40,11 +40,13 @@ def vulnCheck(id):
         return ""
 
 
-@app.route('/vulnarabilities/<string:id>')
-def vulnarabilities(id):
+@app.route('/vulnerabilities/<string:id>')
+def vulnerabilities(id):
     vuln_result = urllib2.urlopen(os.environ["URL"] + '/images/by_id/' + id + '/vuln/os').read()
     python_data_vuln = json.loads(vuln_result)
-    return render_template('vulnarabilities.html', data=python_data_vuln)
+    image_result = urllib2.urlopen(os.environ["URL"] + '/images/by_id/' + id).read()
+    python_data_image = json.loads(image_result)
+    return render_template('vulnerabilities.html', data=python_data_vuln, imagedata=python_data_image[0]["image_detail"])
 
 
 @app.route('/delimage/<string:id>')
@@ -124,13 +126,19 @@ def images():
 
         global imageList
         imageList = []
+        imageCount = 0
         for object in python_data_image:
             id = object["image_detail"][0]["imageId"]
             if "analyzed" in object["analysis_status"]:
-                object['color'] = vulnCheck(id)
+                if imageCount < 10:
+                    object['color'] = vulnCheck(id)
+                    # object['color'] = ""
+                else:
+                    object['color'] = "purplebg"
             else:
                 object['color'] = "orangebg"
             imageList.append(object)
+            imageCount += 1
         return render_template('images.html', dataimage=imageList)
     except IOError as e:
         if e.errno == errno.EPIPE:

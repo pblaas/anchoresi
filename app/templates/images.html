@@ -37,7 +37,9 @@
             <td>{{ dataimage[loop.index-1]["image_content"]["metadata"]["distro_version"] }}</td>
             <td><a href="/delimage/{{ dataimage[loop.index-1]["image_detail"][0]["imageId"] }}" target="_self">Delete</a> </td>
             {% if "redbg" in dataimage[loop.index-1]["color"] %}
-            <td><a href="/vulnarabilities/{{ dataimage[loop.index-1]["image_detail"][0]["imageId"] }}" target="_self">Vulnerabilities found</a> </td>
+            <td><a href="/vulnerabilities/{{ dataimage[loop.index-1]["image_detail"][0]["imageId"] }}" target="_self">Vulnerabilities found</a> </td>
+            {% elif "purplebg" in dataimage[loop.index-1]["color"] %}
+            <td><a href="/vulnerabilities/{{ dataimage[loop.index-1]["image_detail"][0]["imageId"] }}" target="_self">Verify</a> </td>
             {% else %}
             <td>No vulnerabilities found</a> </td>
             {% endif %}

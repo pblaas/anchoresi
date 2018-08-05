@@ -3,8 +3,13 @@
 {% block body %} 
 <div>
 <h4>Vulnerabilities</h4>
-{% if data['vulnerabilities']|length > 0 %}
 
+
+{% for i in imagedata %}
+<h4>{{ i.fulltag }}</h4>
+{% endfor %}
+
+{% if data['vulnerabilities']|length > 0 %}
 <div class="table-responsive">
         <table class="table">
             <caption>Vulnarabilities</caption>
@@ -31,8 +36,9 @@
         </table>
 
 {% else %}
-
-No Vulnerabilities found!
+<div class="white-text">
+    No Vulnerabilities found!
+</div>
 
 {% endif %}
 </div>
